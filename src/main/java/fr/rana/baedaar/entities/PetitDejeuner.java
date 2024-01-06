@@ -8,8 +8,8 @@ public class PetitDejeuner implements Serializable {
     float price;
     String hoursOfDisponibility;
 
-    public PetitDejeuner(float price) {
-        this.price = price;
+    public PetitDejeuner() {
+        this.price = 20;
         hoursOfDisponibility = "6h-11h";
     }
 

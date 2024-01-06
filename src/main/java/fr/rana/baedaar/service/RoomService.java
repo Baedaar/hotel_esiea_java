@@ -1,7 +1,6 @@
 package fr.rana.baedaar.service;
 
 import fr.rana.baedaar.entities.BasicRoom;
-import fr.rana.baedaar.entities.Client;
 import fr.rana.baedaar.entities.LuxuryRoom;
 import fr.rana.baedaar.entities.Room;
 
@@ -17,7 +16,7 @@ public class RoomService {
         createFile();
     }
 
-    private void saveRoom(Room newRoom) {
+    public void saveRoom(Room newRoom) {
         List<Room> rooms = loadRooms(); // Charger les chambres existantes
         rooms.add(newRoom); // Ajouter la nouvelle chambre
 
@@ -50,7 +49,7 @@ public class RoomService {
                 Object obj = inputStream.readObject();
                 if (obj instanceof List) {
                     rooms = (List<Room>) obj;
-                } else if (obj instanceof Room) {
+                } else if (obj instanceof Room && ((Room) obj).isAvailable()) {
                     rooms.add((Room) obj);
                 }
             } catch (IOException | ClassNotFoundException e) {
@@ -60,29 +59,27 @@ public class RoomService {
         return rooms;
     }
 
+    public void updateRoom(int roomId) {
+        List<Room> rooms = loadRooms();
+        boolean available = false;
+        boolean isUpdated = false;
 
-    public List<LuxuryRoom> getAllAvailableLuxuryRooms() {
-        List<LuxuryRoom> luxuryRooms = new ArrayList<>();
-        List<Room> allRoom = loadRooms();
-
-        for (int i = 0; i < allRoom.size() ; i++) {
-            if (allRoom.get(i).getType().equals("Luxury") && allRoom.get(i).isAvailable()) {
-                luxuryRooms.add((LuxuryRoom) allRoom.get(i));
+        for (int i = 0; i < rooms.size(); i++) {
+            Room room = rooms.get(i);
+            if (room.getId() == roomId) {
+                room.setAvailable(available);
+                isUpdated = true;
+                break;
             }
         }
-        return luxuryRooms;
-    }
 
-    public List<BasicRoom> getAllAvailableBasicRooms() {
-        List<BasicRoom> basicRooms = new ArrayList<>();
-        List<Room> allRoom = loadRooms();
-
-        for (int i = 0; i < allRoom.size() ; i++) {
-            if (allRoom.get(i).getType().equals("Basic") && allRoom.get(i).isAvailable()) {
-                basicRooms.add((BasicRoom) allRoom.get(i));
+        if (isUpdated) {
+            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ROOM_FILE))) {
+                oos.writeObject(rooms);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
-        return basicRooms;
     }
 
 

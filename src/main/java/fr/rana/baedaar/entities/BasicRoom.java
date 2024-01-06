@@ -3,12 +3,10 @@ package fr.rana.baedaar.entities;
 public class BasicRoom extends Room {
 
     int numberOfBed;
-    float price;
 
     public BasicRoom(boolean isAvailable, int numberOfBed, float price) {
-        super(isAvailable, "Basic");
+        super(isAvailable, "Basic", price);
         this.numberOfBed = numberOfBed;
-        this.price = price;
     }
 
     public int getNumberOfBed() {
@@ -19,21 +17,15 @@ public class BasicRoom extends Room {
         this.numberOfBed = numberOfBed;
     }
 
-    public float getPrice() {
-        return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
-    }
 
     @Override
     public String toString() {
         return "BasicRoom{" +
                 "numberOfBed=" + numberOfBed +
-                ", price=" + price +
+                ", id=" + id +
                 ", isAvailable=" + isAvailable +
                 ", type='" + type + '\'' +
+                ", price=" + price +
                 '}';
     }
 }

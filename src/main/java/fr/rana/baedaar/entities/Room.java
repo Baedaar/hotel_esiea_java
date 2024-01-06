@@ -8,12 +8,14 @@ public class Room implements Serializable {
     int id;
     boolean isAvailable;
     String type;
+    float price;
     Random random = new Random();
 
-    public Room( boolean isAvailable, String type) {
+    public Room( boolean isAvailable, String type, float price) {
         this.id = random.nextInt(10000);
         this.isAvailable = isAvailable;
         this.type = type;
+        this.price = price;
     }
 
     public int getId() {
@@ -38,5 +40,13 @@ public class Room implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
     }
 }

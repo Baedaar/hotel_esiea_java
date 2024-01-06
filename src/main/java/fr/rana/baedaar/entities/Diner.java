@@ -9,8 +9,8 @@ public class Diner implements Serializable {
     float price;
     String hoursOfDisponibility;
 
-    public Diner(float price) {
-        this.price = price;
+    public Diner() {
+        this.price = 30;
         hoursOfDisponibility = "18h-22h";
     }
 

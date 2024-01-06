@@ -23,11 +23,11 @@ public class ClientService {
     }
 
     private void saveClient(Client newClient) {
-        List<Client> clients = loadClients(); // Charger les clients existants
-        clients.add(newClient); // Ajouter le nouveau client
+        List<Client> clients = loadClients();
+        clients.add(newClient);
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(CLIENT_FILE))) {
-            oos.writeObject(clients); // Sauvegarder la liste entière
+            oos.writeObject(clients);
         } catch (IOException e) {
             e.printStackTrace();
         }
